@@ -1,2 +1,2 @@
-# moq-files
-Serialization of MoQ objects to files 
+# Serialization to files of MoQ Object
+
