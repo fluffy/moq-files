@@ -32,13 +32,13 @@ informative:
 
 --- abstract
 
-A common way to serial the MoQ caches to files makes it easier to test
-and develop caching relays and great test data they can server to
-client.  This specification provides a way to save the meta data about
-each MoQ Object in one or more files as well as pointers to other files
-that contain the contents of the object. This allow the data to remain
-in files that are used for other purposes such as serving HLS/DASH
-video.
+This specification provides a way to save the meta data about each MoQ
+Object in one or more files as well as pointers to other files that
+contain the contents of the object.  Separating of the meta data and
+payload data allow the payload data to remain in files that are used for
+other purposes such as serving HLS/DASH video.  This format makes it
+easier to test and develop caching relays and create test data they can
+serve to client.
 
 
 --- middle
@@ -46,42 +46,45 @@ video.
 # Introduction
 
 This specification defines a way of serializing the MoQ Objects defined
-in {{MOQT}} into files.
+in {{MOQT}} into files. The payload data and the meta data are separated
+into separate files to allow reuse of existing files with the payload
+data. 
 
 
 # JSON Meta Object
 
-The .moq files consist of an array of one more JSON objects. Each
+The .moq files consist of an array of one or more JSON objects. Each
 JSON object contains information about the MoQ object as well as
-pointers to the where the original data can be found. The follow fields
-are defined for JSON object.
+pointers to the where the original data can be found.
 
-* namesSpace: Array of stings that have Base64 encoded of data in each
+The follow fields are defined for JSON object:
+
+* namesSpace: Array of strings that have a Base64 encoded version of the data in each
 segment of MoQT namesSpace
 
-* trackName: string with Base64 encoded version of MoQT trackName
+* trackName: string with Base64 encoded version of the MoQT trackName
 
-* objectID: integer corresponding to MoQT objectID
+* objectID: integer corresponding to the MoQT objectID
 
-* groupID: integer corresponding to MoQT groupID
+* groupID: integer corresponding to the MoQT groupID
 
-* subGroup: integer corresponding to MoQT subGroup
+* subGroup: integer corresponding to the MoQT subGroup
 
-* publisherPriority: integer corresponding to MoQT publisherPriority
+* publisherPriority: integer corresponding to the MoQT publisherPriority
 
-* maxCacheDuration: integer corresponding to MoQT maxCacheDuration
+* maxCacheDuration: integer corresponding to the MoQT maxCacheDuration
 
-* publisherDeliveryTimeout: integer corresponding to MoQT
+* publisherDeliveryTimeout: integer corresponding to the MoQT
 publisherDeliveryTimeout
 
-* receiveTime: time data was created or original received by relay in
-milliseconds since unix epoch
+* receiveTime: time data was created or time original was received
+received by the relay. This is in milliseconds since unix epoch.
 
-* dataFile: string with relative path name to file that stores the object
-data
+* dataFile: string with relative path name to the file that stores the
+MoQT Object Payload data
 
-* dataOffset: number of bytes into file where objects starts ( 0 is first
-byte of file )
+* dataOffset: number of bytes into file where objects starts ( 0 is
+first byte of file )
 
 * dataLength: number of bytes of data in the object
 
@@ -96,8 +99,8 @@ TODO example of time file
 
 # File Naming
 
-It is RECOMMENDED to use a URL encoding version of the FullTrackName with
-a suffix of ".moqm" as the file name for the meta file.
+It is RECOMMENDED to use a URL encoding version of the FullTrackName
+with a suffix of ".moqm" as the file name for the meta file.
 
 
 # Dumping
@@ -113,4 +116,9 @@ Some use case will want to just load a file into the relay as quickly as
 possible. Other will wish to remade the track name to a new track name
 publish the objects at a rate based on differences of the receiveTime of
 the JSON objects.
+
+# IANA
+
+TODO file extension registrations.
+
 
