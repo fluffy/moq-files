@@ -5,7 +5,7 @@ docname: draft-jennings-moq-file-00
 date: {DATE}
 category: std
 
-ipr: trust200902q
+ipr: trust200902
 area:  "Web and Internet Transport"
 submissionType: IETF
 workgroup: "moq"
