@@ -79,8 +79,7 @@ The follow fields are defined for JSON object:
 publisherDeliveryTimeout
 
 * receiveTime: time was created or time original was received
-received by the relay. This is in milliseconds since unix epoch.
-[suhas]: May be this needs to be reworded ?
+received by the relay. This is in milliseconds since the unix epoch.
 
 * dataFile: string with relative path name to the file that stores the
 MOQT Object, including header and its payload data.
@@ -121,7 +120,39 @@ the JSON objects.
 
 # Example
 
-TODO example of time file 
+TODO More complete example
+
+## Time Object Example
+
+Data file named time1.data contains:
+
+~~~
+{"time":17294570764566}
+~~~
+
+Metadata file contains:
+
+
+~~~
+[
+	{
+		"namesSpace": "todo",
+		"trackName": "todo",
+		"objectID": 0,
+		"groupID": 123,
+		"subGroup": 0,
+		"publisherPriority": 0,
+		"maxCacheDuration": 3600000,
+		"publisherDeliveryTimeout": 60000,
+		"receiveTime": 1729457464000,
+		"dataFile": "time1.dat",
+		"dataOffset": 0,
+		"dataLength": 25
+	}
+]
+~~~
+
+
 
 # IANA
 
