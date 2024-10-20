@@ -97,7 +97,7 @@ extension type ID.
 # File Naming
 
 It is RECOMMENDED to use a URL encoding version of the FullTrackName
-with a suffix of ".moqm" as the file name for the meta file. In this
+with a suffix of ".moq" as the file name for the meta file. In this
 context FullTrackName is concatenation of Track Namespace with the
 TrackName, separated by "/". Optionally, the filename can be extended
 with information about group as needed.
@@ -105,11 +105,11 @@ with information about group as needed.
 # MOQT Track DataFile
 
 When saving a whole MOQT Track to a file, a common way to do this would
-be to make one ".data" file with all the object data and another ".moqm"
+be to make one ".dat" file with all the object data and another ".moq"
 file with all the array of JSON object for each MOQT Object. An
 implementation can choose to have one file per MOQT group. In such a
-case, it does so by creating one metadata (".moqm") file and one
-datafile (".data") containing data for each object in the MOQT group.
+case, it does so by creating one metadata (".moq") file and one
+datafile (".dat") containing data for each object in the MOQT group.
 
 # Playback
 
@@ -124,7 +124,7 @@ TODO More complete example
 
 ## Time Object Example
 
-Data file named time1.data contains:
+Data file named time1.dat contains:
 
 ~~~
 {"time":17294570764566}
@@ -132,12 +132,11 @@ Data file named time1.data contains:
 
 Metadata file contains:
 
-
 ~~~
 [
 	{
-		"namesSpace": "todo",
-		"trackName": "todo",
+		"namesSpace": "bW9xOi8vbW9xLXRpbWUuYXJwYS90aW1lLXYxLw=",
+		"trackName": "bWFjOjcyOjVjOmYwOjdjOmJmOmIw",
 		"objectID": 0,
 		"groupID": 123,
 		"subGroup": 0,
@@ -153,9 +152,11 @@ Metadata file contains:
 ~~~
 
 
-
 # IANA
 
 TODO file extension registrations.
 
+# Security Considerations {#sec-security}
+
+TODO
 
