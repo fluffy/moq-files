@@ -22,7 +22,6 @@ author:
     name: Cullen Jennings
     organization: Cisco
     email: fluffy@iii.ca
-
  
 normative:
     MOQT: I-D.ietf-moq-transport
@@ -113,7 +112,7 @@ datafile (".dat") containing data for each object in the MOQT group.
 
 # Playback
 
-Some usecases will want to just load a file into the relay as quickly as
+Some use cases will want to just load a file into the relay as quickly as
 possible. Other may decide to remade the track name to a new track name
 publish the objects at a rate based on differences of the receiveTime of
 the JSON objects.
