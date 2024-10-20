@@ -59,7 +59,8 @@ pointers to the where the original data can be found.
 
 The follow fields are defined for JSON object:
 
-* namesSpace: Array of strings that have a Base64 encoded version of the data in each tuple of MOQT Track Namespace.
+* namesSpace: Array of strings that have a Base64 encoded version of the
+  data in each tuple of MOQT Track Namespace.
 
 * trackName: string with Base64 encoded version of the MOQT TrackName.
 
@@ -69,7 +70,8 @@ The follow fields are defined for JSON object:
 
 * subGroup: integer corresponding to the MOQT SubGroup
 
-* publisherPriority: integer corresponding to the MOQT Object publisherPriority
+* publisherPriority: integer corresponding to the MOQT Object
+  publisherPriority
 
 * maxCacheDuration: integer corresponding to the MOQT maxCacheDuration
 
@@ -96,13 +98,19 @@ extension type ID.
 # File Naming
 
 It is RECOMMENDED to use a URL encoding version of the FullTrackName
-with a suffix of ".moqm" as the file name for the meta file. In this context FullTrackName is concatenation of Track Namespace with the TrackName, separated by "/". Optionally, the filename can be extended with information about group as needed.
+with a suffix of ".moqm" as the file name for the meta file. In this
+context FullTrackName is concatenation of Track Namespace with the
+TrackName, separated by "/". Optionally, the filename can be extended
+with information about group as needed.
 
 # MOQT Track DataFile
 
-When saving a whole MOQT Track to a file, a common way to do this would be
-to make one ".data" file with all the object data and another
-".moqm" file with all the array of JSON object for each MOQT Object. An implementation can choose to have one file per MOQT group. In such a case, it does so by creating one metadata (".moqm") file and one datafile (".data") containing data for each object in the MOQT group. 
+When saving a whole MOQT Track to a file, a common way to do this would
+be to make one ".data" file with all the object data and another ".moqm"
+file with all the array of JSON object for each MOQT Object. An
+implementation can choose to have one file per MOQT group. In such a
+case, it does so by creating one metadata (".moqm") file and one
+datafile (".data") containing data for each object in the MOQT group.
 
 # Playback
 
