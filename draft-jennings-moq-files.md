@@ -24,7 +24,7 @@ author:
     email: fluffy@iii.ca
  
 normative:
-    MOQT: I-D.ietf-moq-transport
+    MoQT: I-D.ietf-moq-transport
 
 informative:
 
@@ -45,7 +45,7 @@ serve to client.
 # Introduction
 
 This specification defines a way of serializing the MoQ Objects defined
-in {{MOQT}} into files. The payload data and the meta data are separated
+in {{MoQT}} into files. The payload data and the meta data are separated
 into separate files to allow reuse of existing files with the payload
 data. 
 
@@ -53,35 +53,49 @@ data.
 # JSON Meta Object
 
 The .moq files consist of an array of one or more JSON objects. Each
-JSON object contains information about the MOQT object as well as
+JSON object contains information about the MoQT object as well as
 pointers to the where the original data can be found.
 
 The follow fields are defined for JSON object:
 
 * namesSpace: Array of strings that have a Base64 encoded version of the
-  data in each tuple of MOQT Track Namespace.
+  data in each tuple of MoQT Track Namespace as defined in {{MoQT}}.
 
-* trackName: string with Base64 encoded version of the MOQT TrackName.
+* trackName: string with Base64 encoded version of the MoQT Trackname
+as defined in {{MoQT}}.
 
-* objectID: integer corresponding to the MOQT ObjectID
+* objectID: integer corresponding to the MoQT Object ID as defined 
+in {{MoQT}}.
 
-* groupID: integer corresponding to the MOQT GroupID
+* groupID: integer corresponding to the MoQT Group ID as defined 
+in {{MoQT}}.
 
-* subGroup: integer corresponding to the MOQT SubGroup
+* subGroup: integer corresponding to the MoQT Subgroup 
+as defined in {{MoQT}}.
 
-* publisherPriority: integer corresponding to the MOQT Object
-  publisherPriority
+* forwardingPref: String with value of "Subgroup" or "Datagram" to 
+represent the Object 
+Forwarding Preference as defined in {{MoQT}}. Open Issue: string 
+or use the binary values used in spec?
 
-* maxCacheDuration: integer corresponding to the MOQT maxCacheDuration
+* objectStatus: Numeric value representing Object Status 
+as defined in {{MoQT}}.
 
-* publisherDeliveryTimeout: integer corresponding to the MOQT
-publisherDeliveryTimeout
+* publisherPriority: integer corresponding to the MoQT 
+  Publisher Priority as defined in {{MoQT}}. 
 
-* receiveTime: time was created or time original was received
-received by the relay. This is in milliseconds since the unix epoch.
+* maxCacheDuration: integer corresponding to the MoQT
+publisher MAX CACHE DURATION Parameter as defined in {{MoQT}}.
+
+* publisherDeliveryTimeout: integer corresponding to the MoQT
+publisher DELIVERY TIMEOUT Parameter as defined in {{MoQT}}.
+
+* receiveTime: time original object was created (if known) or time 
+object was received by the relay.
+This is in milliseconds since the unix epoch.
 
 * dataFile: string with relative path name to the file that stores the
-MOQT Object, including header and its payload data.
+MoQT Object, including header and its payload data.
 
 * dataOffset: number of bytes into file where objects starts ( 0 is
 first byte of file )
@@ -101,14 +115,14 @@ context FullTrackName is concatenation of Track Namespace with the
 TrackName, separated by "/". Optionally, the filename can be extended
 with information about group as needed.
 
-# MOQT Track DataFile
+# MoQT Track DataFile
 
-When saving a whole MOQT Track to a file, a common way to do this would
+When saving a whole MoQT Track to a file, a common way to do this would
 be to make one ".dat" file with all the object data and another ".moq"
-file with all the array of JSON object for each MOQT Object. An
-implementation can choose to have one file per MOQT group. In such a
+file with all the array of JSON object for each MoQT Object. An
+implementation can choose to have one file per MoQT group. In such a
 case, it does so by creating one metadata (".moq") file and one
-datafile (".dat") containing data for each object in the MOQT group.
+datafile (".dat") containing data for each object in the MoQT group.
 
 # Playback
 
