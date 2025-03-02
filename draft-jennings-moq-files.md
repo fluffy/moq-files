@@ -1,6 +1,6 @@
 ---
 title: "Serialization of MoQ Objects to Files"
-abbrev: "Moq Object Files"
+abbrev: "MoQ Object Files"
 docname: draft-jennings-moq-file-02
 date: {DATE}
 category: std
@@ -21,10 +21,13 @@ author:
     ins: C. Jennings
     name: Cullen Jennings
     organization: Cisco
+    country: Canada
     email: fluffy@iii.ca
  
 normative:
     MoQT: I-D.ietf-moq-transport
+    RFC2119: RFC 2119
+    RFC4648: RFC 4648
 
 informative:
 
@@ -111,6 +114,21 @@ Base64 encoded version of the extension header data.  Open Issue: this
 will not preserve the order of the extension headers. Is that a 
 problem?
 
+# Terminology {#terminology}
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+{{RFC2119}}.
+
+This specification uses the terminology defined in {{MoQT}}.
+
+## Base64 Encoding
+
+The Base64 encoding used in this specification is the "Base64
+Encoding with URL and Filename Safe Alphabet" as defined in
+{{RFC4648}}, Section 5. Additionally, the encoding is performed
+without any padding or extra blank space characters
 
 # File Naming
 
@@ -178,3 +196,7 @@ TODO file extension registrations.
 
 TODO
 
+# Acknowledgements
+
+Thank you to Suhas Nandakumar, Tomas Rigaux, Carsten Bormann and
+Gwendal Simon for their reviews and suggestions.
