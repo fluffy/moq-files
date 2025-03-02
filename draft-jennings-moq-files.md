@@ -86,9 +86,8 @@ The follow fields are defined for JSON object:
 * maxCacheDuration: integer corresponding to the MoQT publisher MAX
   CACHE DURATION Parameter as defined in {{MoQT}}.
 
-* publisherDeliveryTimeout: integer corresponding to the MoQT
-  DELIVERY TIMEOUT Parameter sent by the publisher as defined 
-  in {{MoQT}}.
+* publisherDeliveryTimeout: integer corresponding to the MoQT DELIVERY
+  TIMEOUT Parameter sent by the publisher as defined in {{MoQT}}.
 
 * receiveTime: time original object was created (if known) or time
   object was received by the relay.  This is in milliseconds since the
@@ -102,12 +101,11 @@ The follow fields are defined for JSON object:
 
 * dataLength: number of bytes of data in the object
 
-Any Object Extension Headers, as defined in {{MoQT}}, should also 
-be saved using a field name formed by the string "ext" then the 
-base 10 integer representation of the extension type with a value 
-that is the Base64 encoded version of the extension header data. 
-Open Issue: this will not preserve the oder of the extension 
-headers. Is that a problem?
+Any Object Extension Headers, as defined in {{MoQT}}, should also be
+saved using a field name formed by the string "ext" then the base 10
+integer representation of the extension type with a value that is the
+Base64 encoded version of the extension header data.  Open Issue: this
+will not preserve the oder of the extension headers. Is that a problem?
 
 
 # File Naming
