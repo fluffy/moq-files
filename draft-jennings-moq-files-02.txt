@@ -1,0 +1,280 @@
+
+
+
+
+moq                                                          C. Jennings
+Internet-Draft                                                     Cisco
+Intended status: Standards Track                            1 March 2025
+Expires: 2 September 2025
+
+
+                 Serialization of MoQ Objects to Files
+                       draft-jennings-moq-file-02
+
+Abstract
+
+   This specification provides a way to save the metadata about each MoQ
+   Object in one or more files as well as pointers to other files that
+   contain the contents of the object.  Separating of the metadata and
+   payload data allows the payload data to remain in files that are used
+   for other purposes such as serving HLS/DASH video.  This format makes
+   it easier to test and develop caching relays and create test data
+   they can serve to clients.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 2 September 2025.
+
+Copyright Notice
+
+   Copyright (c) 2025 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+Jennings                Expires 2 September 2025                [Page 1]
+
+Internet-Draft              Moq Object Files                  March 2025
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  JSON Meta Object  . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  File Naming . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   4.  MoQT Track DataFile . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Playback  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   6.  Example . . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     6.1.  Time Object Example . . . . . . . . . . . . . . . . . . .   4
+   7.  IANA  . . . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   5
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+
+1.  Introduction
+
+   This specification defines a way of serializing the MoQ Objects
+   defined in [MoQT] into files.  The payload data and the metadata are
+   separated into separate files to allows reuse of existing files with
+   the payload data.
+
+2.  JSON Meta Object
+
+   The .moq files consist of an array of one or more JSON objects.  Each
+   JSON object contains information about the MoQT object as well as
+   pointers to the where the original data can be found.
+
+   The following fields are defined for JSON object:
+
+   *  namesSpace: Array of strings that have a Base64 encoded version of
+      the data in each tuple of MoQT Track Namespace as defined in
+      [MoQT].
+
+   *  trackName: string with Base64 encoded version of the MoQT
+      Trackname as defined in [MoQT].
+
+   *  objectID: integer corresponding to the MoQT Object ID as defined
+      in [MoQT].
+
+
+
+
+Jennings                Expires 2 September 2025                [Page 2]
+
+Internet-Draft              Moq Object Files                  March 2025
+
+
+   *  groupID: integer corresponding to the MoQT Group ID as defined in
+      [MoQT].
+
+   *  subGroup: integer corresponding to the MoQT Subgroup as defined in
+      [MoQT].
+
+   *  forwardingPref: String with value of "Subgroup" or "Datagram" to
+      represent the Object Forwarding Preference as defined in [MoQT].
+      Open Issue: string or use the binary values used in spec?
+
+   *  objectStatus: Numeric value representing Object Status as defined
+      in [MoQT].
+
+   *  publisherPriority: integer corresponding to the MoQT Publisher
+      Priority as defined in [MoQT].
+
+   *  maxCacheDuration: integer corresponding to the MoQT publisher MAX
+      CACHE DURATION Parameter as defined in [MoQT].
+
+   *  publisherDeliveryTimeout: integer corresponding to the MoQT
+      DELIVERY TIMEOUT Parameter sent by the publisher as defined in
+      [MoQT].
+
+   *  receiveTime: time original object was created (if known) or time
+      object was received by the relay.  This is in milliseconds since
+      the unix epoch.
+
+   *  dataFile: string with relative path name to the file that stores
+      the MoQT Object, including header and its payload data.
+
+   *  dataOffset: number of bytes into file where the objects starts ( 0
+      is first byte of file )
+
+   *  dataLength: number of bytes of data in the object
+
+   Any Object Extension Headers, as defined in [MoQT], should also be
+   saved using a field name formed by the string "ext" then the base 10
+   integer representation of the extension type with a value that is the
+   Base64 encoded version of the extension header data.  Open Issue:
+   this will not preserve the order of the extension headers.  Is that a
+   problem?
+
+
+
+
+
+
+
+
+
+
+Jennings                Expires 2 September 2025                [Page 3]
+
+Internet-Draft              Moq Object Files                  March 2025
+
+
+3.  File Naming
+
+   It is RECOMMENDED to use a URL encoding version of the FullTrackName
+   with a suffix of ".moq" as the file name for the meta file.  In this
+   context FullTrackName is concatenation of Track Namespace with the
+   TrackName, separated by "_".  Optionally, the filename can be
+   extended with information about group as needed.
+
+4.  MoQT Track DataFile
+
+   When saving a whole MoQT Track to a file, a common way to do this
+   would be to make one ".dat" file with all the object data and another
+   ".moq" file with all the array of JSON object for each MoQT Object.
+   An implementation can choose to have one file per MoQT group.  In
+   such a case, it does so by creating one metadata (".moq") file and
+   one datafile (".dat") containing data for each object in the MoQT
+   group.
+
+5.  Playback
+
+   Some use cases will want to just load a file into the relay as
+   quickly as possible.  Others may decide to rename the track name to a
+   new track name and publish the objects at a rate based on differences
+   of the receiveTime of the JSON objects.
+
+6.  Example
+
+   TODO More complete example
+
+6.1.  Time Object Example
+
+   Data file named time1.dat contains:
+
+   {"time":17294570764566}
+
+   Metadata file contains:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jennings                Expires 2 September 2025                [Page 4]
+
+Internet-Draft              Moq Object Files                  March 2025
+
+
+   [
+     {
+       "namesSpace": "bW9xOi8vbW9xLXRpbWUuYXJwYS90aW1lLXYxLw=",
+       "trackName": "bWFjOjcyOjVjOmYwOjdjOmJmOmIw",
+       "objectID": 0,
+       "groupID": 123,
+       "subGroup": 0,
+       "publisherPriority": 0,
+       "maxCacheDuration": 3600000,
+       "publisherDeliveryTimeout": 60000,
+       "receiveTime": 1729457464000,
+       "dataFile": "time1.dat",
+       "dataOffset": 0,
+       "dataLength": 25
+     }
+   ]
+
+7.  IANA
+
+   TODO file extension registrations.
+
+8.  Security Considerations
+
+   TODO
+
+9.  Normative References
+
+   [MoQT]     Curley, L., Pugin, K., Nandakumar, S., Vasiliev, V., and
+              I. Swett, "Media over QUIC Transport", Work in Progress,
+              Internet-Draft, draft-ietf-moq-transport-08, 12 February
+              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              moq-transport-08>.
+
+Author's Address
+
+   Cullen Jennings
+   Cisco
+   Email: fluffy@iii.ca
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jennings                Expires 2 September 2025                [Page 5]
