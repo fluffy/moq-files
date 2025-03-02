@@ -4,12 +4,12 @@
 
 moq                                                          C. Jennings
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                            1 March 2025
-Expires: 2 September 2025
+Intended status: Standards Track                            2 March 2025
+Expires: 3 September 2025
 
 
                  Serialization of MoQ Objects to Files
-                       draft-jennings-moq-file-02
+                       draft-jennings-moq-file-03
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2025.
+   This Internet-Draft will expire on 3 September 2025.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Jennings                Expires 2 September 2025                [Page 1]
+Jennings                Expires 3 September 2025                [Page 1]
 
-Internet-Draft              Moq Object Files                  March 2025
+Internet-Draft              MoQ Object Files                  March 2025
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -71,15 +71,18 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  JSON Meta Object  . . . . . . . . . . . . . . . . . . . . . .   2
-   3.  File Naming . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   4.  MoQT Track DataFile . . . . . . . . . . . . . . . . . . . . .   4
-   5.  Playback  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   6.  Example . . . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     6.1.  Time Object Example . . . . . . . . . . . . . . . . . . .   4
-   7.  IANA  . . . . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   5
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   3.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     3.1.  Base64 Encoding . . . . . . . . . . . . . . . . . . . . .   4
+   4.  File Naming . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   5.  MoQT Track DataFile . . . . . . . . . . . . . . . . . . . . .   4
+   6.  Playback  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   7.  Example . . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     7.1.  Time Object Example . . . . . . . . . . . . . . . . . . .   4
+   8.  IANA  . . . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
+   11. Normative References  . . . . . . . . . . . . . . . . . . . .   5
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -96,29 +99,29 @@ Table of Contents
 
    The following fields are defined for JSON object:
 
-   *  namesSpace: Array of strings that have a Base64 encoded version of
-      the data in each tuple of MoQT Track Namespace as defined in
-      [MoQT].
+   *  trackNamespace: Array of strings that have a Base64 encoded
+      version of the data in each tuple of MoQT Track Namespace as
+      defined in [MoQT].
 
    *  trackName: string with Base64 encoded version of the MoQT
       Trackname as defined in [MoQT].
 
+
+
+
+Jennings                Expires 3 September 2025                [Page 2]
+
+Internet-Draft              MoQ Object Files                  March 2025
+
+
    *  objectID: integer corresponding to the MoQT Object ID as defined
       in [MoQT].
-
-
-
-
-Jennings                Expires 2 September 2025                [Page 2]
-
-Internet-Draft              Moq Object Files                  March 2025
-
 
    *  groupID: integer corresponding to the MoQT Group ID as defined in
       [MoQT].
 
-   *  subGroup: integer corresponding to the MoQT Subgroup as defined in
-      [MoQT].
+   *  subGroupID: integer corresponding to the MoQT Subgroup as defined
+      in [MoQT].
 
    *  forwardingPref: String with value of "Subgroup" or "Datagram" to
       represent the Object Forwarding Preference as defined in [MoQT].
@@ -138,8 +141,9 @@ Internet-Draft              Moq Object Files                  March 2025
       [MoQT].
 
    *  receiveTime: time original object was created (if known) or time
-      object was received by the relay.  This is in milliseconds since
-      the unix epoch.
+      object was received by the relay.  This is saved as an integer in
+      milliseconds since the unix epoch which is 00:00:00 UTC on January
+      first, 1970.
 
    *  dataFile: string with relative path name to the file that stores
       the MoQT Object, including header and its payload data.
@@ -161,16 +165,27 @@ Internet-Draft              Moq Object Files                  March 2025
 
 
 
-
-
-
-
-Jennings                Expires 2 September 2025                [Page 3]
+Jennings                Expires 3 September 2025                [Page 3]
 
-Internet-Draft              Moq Object Files                  March 2025
+Internet-Draft              MoQ Object Files                  March 2025
 
 
-3.  File Naming
+3.  Terminology
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
+
+   This specification uses the terminology defined in [MoQT].
+
+3.1.  Base64 Encoding
+
+   The Base64 encoding used in this specification is the "Base64
+   Encoding with URL and Filename Safe Alphabet" as defined in
+   [RFC4648], Section 5.  Additionally, the encoding is performed
+   without any padding or extra blank space characters
+
+4.  File Naming
 
    It is RECOMMENDED to use a URL encoding version of the FullTrackName
    with a suffix of ".moq" as the file name for the meta file.  In this
@@ -178,7 +193,7 @@ Internet-Draft              Moq Object Files                  March 2025
    TrackName, separated by "_".  Optionally, the filename can be
    extended with information about group as needed.
 
-4.  MoQT Track DataFile
+5.  MoQT Track DataFile
 
    When saving a whole MoQT Track to a file, a common way to do this
    would be to make one ".dat" file with all the object data and another
@@ -188,43 +203,32 @@ Internet-Draft              Moq Object Files                  March 2025
    one datafile (".dat") containing data for each object in the MoQT
    group.
 
-5.  Playback
+6.  Playback
 
    Some use cases will want to just load a file into the relay as
    quickly as possible.  Others may decide to rename the track name to a
    new track name and publish the objects at a rate based on differences
    of the receiveTime of the JSON objects.
 
-6.  Example
+7.  Example
 
    TODO More complete example
 
-6.1.  Time Object Example
+7.1.  Time Object Example
 
    Data file named time1.dat contains:
+
+
+
+
+Jennings                Expires 3 September 2025                [Page 4]
+
+Internet-Draft              MoQ Object Files                  March 2025
+
 
    {"time":17294570764566}
 
    Metadata file contains:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Jennings                Expires 2 September 2025                [Page 4]
-
-Internet-Draft              Moq Object Files                  March 2025
-
 
    [
      {
@@ -243,26 +247,50 @@ Internet-Draft              Moq Object Files                  March 2025
      }
    ]
 
-7.  IANA
+8.  IANA
 
    TODO file extension registrations.
 
-8.  Security Considerations
+9.  Security Considerations
 
    TODO
 
-9.  Normative References
+10.  Acknowledgements
+
+   Thank you to Suhas Nandakumar, Tomas Rigaux, Carsten Bormann and
+   Gwendal Simon for their reviews and suggestions.
+
+11.  Normative References
 
    [MoQT]     Curley, L., Pugin, K., Nandakumar, S., Vasiliev, V., and
               I. Swett, "Media over QUIC Transport", Work in Progress,
-              Internet-Draft, draft-ietf-moq-transport-08, 12 February
-              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              moq-transport-08>.
+              Internet-Draft, draft-ietf-moq-transport-09, 1 March 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-moq-
+              transport-09>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+
+
+
+
+Jennings                Expires 3 September 2025                [Page 5]
+
+Internet-Draft              MoQ Object Files                  March 2025
+
+
+   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
+              <https://www.rfc-editor.org/rfc/rfc4648>.
 
 Author's Address
 
    Cullen Jennings
    Cisco
+   Canada
    Email: fluffy@iii.ca
 
 
@@ -277,4 +305,32 @@ Author's Address
 
 
 
-Jennings                Expires 2 September 2025                [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jennings                Expires 3 September 2025                [Page 6]
