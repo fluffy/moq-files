@@ -1,6 +1,6 @@
 ---
 title: "Serialization of MoQ Objects to Files"
-abbrev: "Moq Object Files"
+abbrev: "MoQ Object Files"
 docname: draft-jennings-moq-file-02
 date: {DATE}
 category: std
@@ -21,6 +21,7 @@ author:
     ins: C. Jennings
     name: Cullen Jennings
     organization: Cisco
+    country: Canada
     email: fluffy@iii.ca
  
 normative:
@@ -123,11 +124,10 @@ This specification uses the terminology defined in {{MoQT}}.
 
 ## Base64 Encoding
 
-The Base64 encoding used in this specification is the "Base 64 
-Encoding with URL and Filename Safe Alphabet" as defined in 
-({{RFC4648}}, Section 5 ). In addition, the encoding is doen 
-without any padding or extra blank space characters.
-
+The Base64 encoding used in this specification is the "Base64
+Encoding with URL and Filename Safe Alphabet" as defined in
+{{RFC4648}}, Section 5. Additionally, the encoding is performed
+without any padding or extra blank space characters
 
 # File Naming
 
@@ -195,3 +195,7 @@ TODO file extension registrations.
 
 TODO
 
+# Acknowledgements
+
+Thank you to Suhas Nandakumar, Tomas Rigaux, Carsten Bormann and
+Gwendal Simon for their reviews and suggestions.
