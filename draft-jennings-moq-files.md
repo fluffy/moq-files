@@ -31,13 +31,14 @@ informative:
 
 --- abstract
 
-This specification provides a way to save the meta data about each MoQ
+This specification provides a way to save the metadata about each MoQ
 Object in one or more files as well as pointers to other files that
-contain the contents of the object.  Separating of the meta data and
-payload data allow the payload data to remain in files that are used for
+contain the contents of the object.  Separating of the metadata and
+payload data allows the payload data to remain in files that are 
+used for
 other purposes such as serving HLS/DASH video.  This format makes it
 easier to test and develop caching relays and create test data they can
-serve to client.
+serve to clients.
 
 
 --- middle
@@ -45,8 +46,8 @@ serve to client.
 # Introduction
 
 This specification defines a way of serializing the MoQ Objects defined
-in {{MoQT}} into files. The payload data and the meta data are separated
-into separate files to allow reuse of existing files with the payload
+in {{MoQT}} into files. The payload data and the metadata are separated
+into separate files to allows reuse of existing files with the payload
 data. 
 
 
@@ -56,7 +57,7 @@ The .moq files consist of an array of one or more JSON objects. Each
 JSON object contains information about the MoQT object as well as
 pointers to the where the original data can be found.
 
-The follow fields are defined for JSON object:
+The following fields are defined for JSON object:
 
 * namesSpace: Array of strings that have a Base64 encoded version of the
   data in each tuple of MoQT Track Namespace as defined in {{MoQT}}.
@@ -96,7 +97,8 @@ The follow fields are defined for JSON object:
 * dataFile: string with relative path name to the file that stores the
   MoQT Object, including header and its payload data.
 
-* dataOffset: number of bytes into file where objects starts ( 0 is
+* dataOffset: number of bytes into file where the objects starts ( 
+0 is
   first byte of file )
 
 * dataLength: number of bytes of data in the object
@@ -105,7 +107,8 @@ Any Object Extension Headers, as defined in {{MoQT}}, should also be
 saved using a field name formed by the string "ext" then the base 10
 integer representation of the extension type with a value that is the
 Base64 encoded version of the extension header data.  Open Issue: this
-will not preserve the oder of the extension headers. Is that a problem?
+will not preserve the order of the extension headers. Is that a 
+problem?
 
 
 # File Naming
@@ -128,7 +131,8 @@ datafile (".dat") containing data for each object in the MoQT group.
 # Playback
 
 Some use cases will want to just load a file into the relay as quickly as
-possible. Other may decide to remade the track name to a new track name
+possible. Other may decide to renade the track name to a new track 
+name and 
 publish the objects at a rate based on differences of the receiveTime of
 the JSON objects.
 
