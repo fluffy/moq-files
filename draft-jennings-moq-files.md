@@ -131,7 +131,7 @@ datafile (".dat") containing data for each object in the MoQT group.
 # Playback
 
 Some use cases will want to just load a file into the relay as
-quickly as possible. Others may decide to renade the track name to
+quickly as possible. Others may decide to rename the track name to
 a new track name and publish the objects at a rate based on
 differences of the receiveTime of the JSON objects.
 
