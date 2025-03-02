@@ -91,8 +91,9 @@ The following fields are defined for JSON object:
   TIMEOUT Parameter sent by the publisher as defined in {{MoQT}}.
 
 * receiveTime: time original object was created (if known) or time
-  object was received by the relay.  This is in milliseconds since the
-  unix epoch.
+  object was received by the relay. This is saved as an integer in
+  milliseconds since the unix epoch which is 00:00:00 UTC on
+  January first, 1970.
 
 * dataFile: string with relative path name to the file that stores the
   MoQT Object, including header and its payload data.
