@@ -61,50 +61,53 @@ The follow fields are defined for JSON object:
 * namesSpace: Array of strings that have a Base64 encoded version of the
   data in each tuple of MoQT Track Namespace as defined in {{MoQT}}.
 
-* trackName: string with Base64 encoded version of the MoQT Trackname
-as defined in {{MoQT}}.
+* trackName: string with Base64 encoded version of the MoQT Trackname as
+  defined in {{MoQT}}.
 
-* objectID: integer corresponding to the MoQT Object ID as defined 
-in {{MoQT}}.
+* objectID: integer corresponding to the MoQT Object ID as defined in
+  {{MoQT}}.
 
-* groupID: integer corresponding to the MoQT Group ID as defined 
-in {{MoQT}}.
+* groupID: integer corresponding to the MoQT Group ID as defined in
+  {{MoQT}}.
 
-* subGroup: integer corresponding to the MoQT Subgroup 
-as defined in {{MoQT}}.
+* subGroup: integer corresponding to the MoQT Subgroup as defined in
+  {{MoQT}}.
 
-* forwardingPref: String with value of "Subgroup" or "Datagram" to 
-represent the Object 
-Forwarding Preference as defined in {{MoQT}}. Open Issue: string 
-or use the binary values used in spec?
+* forwardingPref: String with value of "Subgroup" or "Datagram" to
+  represent the Object Forwarding Preference as defined in
+  {{MoQT}}. Open Issue: string or use the binary values used in spec?
 
-* objectStatus: Numeric value representing Object Status 
-as defined in {{MoQT}}.
+* objectStatus: Numeric value representing Object Status as defined in
+  {{MoQT}}.
 
-* publisherPriority: integer corresponding to the MoQT 
-  Publisher Priority as defined in {{MoQT}}. 
+* publisherPriority: integer corresponding to the MoQT Publisher
+  Priority as defined in {{MoQT}}.
 
-* maxCacheDuration: integer corresponding to the MoQT
-publisher MAX CACHE DURATION Parameter as defined in {{MoQT}}.
+* maxCacheDuration: integer corresponding to the MoQT publisher MAX
+  CACHE DURATION Parameter as defined in {{MoQT}}.
 
 * publisherDeliveryTimeout: integer corresponding to the MoQT
-publisher DELIVERY TIMEOUT Parameter as defined in {{MoQT}}.
+  DELIVERY TIMEOUT Parameter sent by the publisher as defined 
+  in {{MoQT}}.
 
-* receiveTime: time original object was created (if known) or time 
-object was received by the relay.
-This is in milliseconds since the unix epoch.
+* receiveTime: time original object was created (if known) or time
+  object was received by the relay.  This is in milliseconds since the
+  unix epoch.
 
 * dataFile: string with relative path name to the file that stores the
-MoQT Object, including header and its payload data.
+  MoQT Object, including header and its payload data.
 
 * dataOffset: number of bytes into file where objects starts ( 0 is
-first byte of file )
+  first byte of file )
 
 * dataLength: number of bytes of data in the object
 
-Any extension attributes should also be saved using a field name formed
-by the string "ext" then the base 10 integer representation of the
-extension type ID.
+Any Object Extension Headers, as defined in {{MoQT}}, should also 
+be saved using a field name formed by the string "ext" then the 
+base 10 integer representation of the extension type with a value 
+that is the Base64 encoded version of the extension header data. 
+Open Issue: this will not preserve the oder of the extension 
+headers. Is that a problem?
 
 
 # File Naming
@@ -112,7 +115,7 @@ extension type ID.
 It is RECOMMENDED to use a URL encoding version of the FullTrackName
 with a suffix of ".moq" as the file name for the meta file. In this
 context FullTrackName is concatenation of Track Namespace with the
-TrackName, separated by "/". Optionally, the filename can be extended
+TrackName, separated by "_". Optionally, the filename can be extended
 with information about group as needed.
 
 # MoQT Track DataFile
@@ -147,20 +150,20 @@ Metadata file contains:
 
 ~~~
 [
-	{
-		"namesSpace": "bW9xOi8vbW9xLXRpbWUuYXJwYS90aW1lLXYxLw=",
-		"trackName": "bWFjOjcyOjVjOmYwOjdjOmJmOmIw",
-		"objectID": 0,
-		"groupID": 123,
-		"subGroup": 0,
-		"publisherPriority": 0,
-		"maxCacheDuration": 3600000,
-		"publisherDeliveryTimeout": 60000,
-		"receiveTime": 1729457464000,
-		"dataFile": "time1.dat",
-		"dataOffset": 0,
-		"dataLength": 25
-	}
+  {
+    "namesSpace": "bW9xOi8vbW9xLXRpbWUuYXJwYS90aW1lLXYxLw=",
+    "trackName": "bWFjOjcyOjVjOmYwOjdjOmJmOmIw",
+    "objectID": 0,
+    "groupID": 123,
+    "subGroup": 0,
+    "publisherPriority": 0,
+    "maxCacheDuration": 3600000,
+    "publisherDeliveryTimeout": 60000,
+    "receiveTime": 1729457464000,
+    "dataFile": "time1.dat",
+    "dataOffset": 0,
+    "dataLength": 25
+  }
 ]
 ~~~
 
