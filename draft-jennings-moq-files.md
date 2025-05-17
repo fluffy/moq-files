@@ -180,7 +180,7 @@ Metadata file contains:
 ~~~
 [
   {
-    "namesSpace": "bW9xOi8vbW9xLXRpbWUuYXJwYS90aW1lLXYxLw=",
+    "namesSpace": [ "bW9xLXRpbWUuYXJwYQo=" , "dGltZS12MQo=" ],
     "trackName": "bWFjOjcyOjVjOmYwOjdjOmJmOmIw",
     "objectID": 0,
     "groupID": 123,
