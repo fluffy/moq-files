@@ -1,7 +1,7 @@
 ---
 title: "Serialization of MoQ Objects to Files"
 abbrev: "MoQ Object Files"
-docname: draft-jennings-moq-file-03
+docname: draft-jennings-moq-file-04
 date: {DATE}
 category: std
 
