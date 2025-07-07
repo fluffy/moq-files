@@ -1,7 +1,7 @@
 ---
 title: "Serialization of MoQ Objects to Files"
 abbrev: "MoQ Object Files"
-docname: draft-jennings-moq-file-03
+docname: draft-jennings-moq-file-04
 date: {DATE}
 category: std
 
@@ -130,13 +130,22 @@ Encoding with URL and Filename Safe Alphabet" as defined in
 {{RFC4648}}, Section 5. Additionally, the encoding is performed
 without any padding or extra blank space characters
 
-# File Naming
+## File Name Encoding
 
-It is RECOMMENDED to use a URL encoding version of the FullTrackName
-with a suffix of ".moq" as the file name for the meta file. In this
-context FullTrackName is concatenation of Track Namespace with the
-TrackName, separated by "_". Optionally, the filename can be extended
-with information about group as needed.
+The filename SHOULD be formed by percent encoding each tuple of the
+namespace and track. Each tuple of the namespace is separated with a
+period and the last tuple is separated from the track name with a dash.
+The percent encoding users a percent symbol followed by two lower case
+hex digits for any characters outside the range of 0 to 9, a to z, or A
+to Z.
+
+For example, a names of of ( Foo, b+r ) with track name of ex1 would be
+encoded as: Foo.b%2br-ex1
+
+If the filename only has data for a subset of the track, a plus sign
+followed by number of first group ID represented by the file SHOULD be
+appended.
+
 
 # MoQT Track DataFile
 
@@ -171,7 +180,7 @@ Metadata file contains:
 ~~~
 [
   {
-    "namesSpace": "bW9xOi8vbW9xLXRpbWUuYXJwYS90aW1lLXYxLw=",
+    "namesSpace": [ "bW9xLXRpbWUuYXJwYQo=" , "dGltZS12MQo=" ],
     "trackName": "bWFjOjcyOjVjOmYwOjdjOmJmOmIw",
     "objectID": 0,
     "groupID": 123,
