@@ -59,7 +59,7 @@ The .moq files consist of an array of one or more JSON objects. Each
 JSON object contains information about the MoQT object as well as
 pointers to the where the original data can be found.
 
-The following fields are defined for JSON object:
+The following fields are defined for each JSON object:
 
 * trackNamespace: Array of strings that have a Base64 encoded version of
   the data in each tuple of MoQT Track Namespace as defined in {{MoQT}}.
@@ -73,14 +73,14 @@ The following fields are defined for JSON object:
 * groupID: integer corresponding to the MoQT Group ID as defined in
   {{MoQT}}.
 
-* subGroupID: integer corresponding to the MoQT Subgroup as defined in
+* subgroupID: integer corresponding to the MoQT Subgroup as defined in
   {{MoQT}}.
 
 * forwardingPref: String with value of "Subgroup" or "Datagram" to
   represent the Object Forwarding Preference as defined in
   {{MoQT}}. Open Issue: string or use the binary values used in spec?
 
-* objectStatus: Numeric value representing Object Status as defined in
+* objectStatus: Numeric value representing Object Status enum as defined in
   {{MoQT}}.
 
 * publisherPriority: integer corresponding to the MoQT Publisher
@@ -201,7 +201,6 @@ TODO file extension registrations.
 
 # Security Considerations {#sec-security}
 
-TODO
 
 # Acknowledgements
 
