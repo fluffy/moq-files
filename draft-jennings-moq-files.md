@@ -201,6 +201,14 @@ TODO file extension registrations.
 
 # Security Considerations {#sec-security}
 
+An application that subscribes to a set of tracks and records objects to
+files SHOULD NOT store any authorization tokens that it receives.
+
+An application that reads MOQ files must ensure it properly controls
+which data files are accessed. A corrupt or malicious input MOQ file
+could cause the application to attempt to read unauthorized data files,
+such as an SSH private key, and potentially transmit the data over MoQT.
+
 
 # Acknowledgements
 
