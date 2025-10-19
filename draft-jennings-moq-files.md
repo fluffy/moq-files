@@ -197,7 +197,7 @@ Metadata file contains:
 
 # IANA
 
-TODO file extension registrations.
+This document has no IANA actions.
 
 # Security Considerations {#sec-security}
 
